@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<meta name="description" content="在线会议" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/talk/favicon.ico" />
+		<link rel="stylesheet" href="/talk/css/fontawesome.min.css" />
+		<link rel="stylesheet" href="/talk/css/solid.min.css" />
+		<link rel="stylesheet" href="/talk/css/style.css" />
+		<script src="/talk/js/adapter-latest.js"></script>
+		<script src="/talk/js/socket.io.js" crossorigin="anonymous"></script>
+		<script src="/talk/js/script.js"></script>
+		<title>TalkRoom - 聊天室</title>
+	</head>
+
+	<body onload="init()">
+		<div id="message">分享此链接开始聊天.<br /></div>
+		<div id="allowaccess">
+			请打开麦克风和摄像头权限
+		</div>
+		<div id="buttons">
+			<button id="mutebtn" class="fas fa-microphone"></button>
+			<button id="videomutebtn" class="fas fa-video"></button>
+			<button id="swapcamerabtn" class="fas fa-sync-alt"></button>
+			<button id="screensharebtn" class="fas fa-desktop"></button>
+		</div>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-137149531-2"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-137149531-2');
+	</script>
+	</body>
+</html>
