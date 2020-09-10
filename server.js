@@ -14,16 +14,16 @@ io.sockets.on('connection', (socket) => {
 	const socketHostName = socket.handshake.headers.host.split(':')[0];
 	socket.channels = {};
 	sockets[socket.id] = socket;
-	console.log(`[${socket.id}] connection accepted`);
-	
+
+	// 用户掉线
 	socket.on('disconnect', () => {
 		for (const channel in socket.channels) {
 			remove(channel);
 		}
-		console.log(`[${socket.id}] disconnected`);
 		delete sockets[socket.id];
 	});
 
+	// 加入房间
 	socket.on('join', (config) => {
 		const channel = socketHostName + config.channel;
 		if (channel in socket.channels) return;
@@ -67,11 +67,10 @@ io.sockets.on('connection', (socket) => {
 	 * @param  {[type]} config [description]
 	 * @return {[type]}        [description]
 	 */
-	socket.on('relayICECandidate', (config) => {
-		let peerId = config.peerId;
-		let iceCandidate = config.iceCandidate;
-		console.log(`[${socket.id}] relay ICE-candidate to [${peerId}] ${iceCandidate}`);
-
+	socket.on('relayICECandidate', ({ peerId, iceCandidate}) => {
+		console.log(
+			`[${socket.id}] relay ICE-candidate to [${peerId}] ${iceCandidate}`
+		);
 		if (peerId in sockets) {
 			sockets[peerId].emit('iceCandidate', {
 				peerId: socket.id,
@@ -85,15 +84,13 @@ io.sockets.on('connection', (socket) => {
 	 * @param  {[type]} config [description]
 	 * @return {[type]}        [description]
 	 */
-	socket.on('relaySessionDescription', (config) => {
-		let peerId = config.peerId;
-		let sessionDescription = config.sessionDescription;
+	socket.on('relaySessionDescription', ({ peerId, sessionDescription }) => {
 		console.log(`[${socket.id}] relay SessionDescription to [${peerId}] ${sessionDescription}`);
 
 		if (peerId in sockets) {
 			sockets[peerId].emit('sessionDescription', {
 				peerId: socket.id,
-				sessionDescription: sessionDescription,
+				sessionDescription,
 			});
 		}
 	});
